@@ -8,7 +8,8 @@ public class NewsCrawlerTest {
 	private NewsCrawler crawler = new NewsCrawler();
 	@Test
 	public void testGetSina() throws Exception{
-		String url = "http://news.sina.com.cn/c/2012-11-10/051925548414.shtml";
+//		String url = "http://news.sina.com.cn/c/2012-11-10/051925548414.shtml";
+		String url = "http://sports.sina.com.cn/nba/2012-11-10/13486290723.shtml";
 		String charset = "gb2312";
 		News sinanews = crawler.getSina(url, charset);
 		System.out.println(sinanews.getTitle());
@@ -16,7 +17,6 @@ public class NewsCrawlerTest {
 		System.out.println(sinanews.getSections().size());
 		for(String sec:sinanews.getSections()){
 			System.out.println(sec);
-			System.out.println();
 		}
 	}
 }

@@ -7,6 +7,10 @@ public class News {
 	private String imageAddress;
 	private String title;
 	private List<String> sections;
+	private String content;
+
+    private String summary;
+
 	public String getImageAddress() {
 		return imageAddress;
 	}
@@ -25,5 +29,16 @@ public class News {
 	public void setSections(List<String> sections) {
 		this.sections = sections;
 	}
-
+    public String getSummary() {
+        return summary;
+    }
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+    public String getContent() {
+        return content;
+    }
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
