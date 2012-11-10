@@ -7,13 +7,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-codec-1.6.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fluent-hc-4.2.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-4.2.2.jar" sourcepath="E:/download/httpcomponents-client-4.2.2-src.zip"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-cache-4.2.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpcore-4.2.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpmime-4.2.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang-2.5.jar"/>
@@ -32,5 +26,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/proxool-cglib-0.9.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/standard.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-codec-1.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-httpclient-3.1.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

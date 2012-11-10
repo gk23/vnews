@@ -1,10 +1,8 @@
 package cn.vxinwen.crawling;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.client.ClientProtocolException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,17 +13,19 @@ import cn.vxinwen.bean.News;
 public class NewsCrawler extends AbstractCrawler{
 	private String[] websites={"http://news.sina.com.cn","news.163.com","http://v.tom.com/"};
 	private String[] charsets={"gb2312","gb2312","utf-8"};
-	public News get(String url,String charset) throws ClientProtocolException, IOException {
+	public News get(String url,String charset) {
 		String content = crawl(url,charset);
 		
 		return new News();
 	}
 	
-	public News getSina(String url, String charset) throws ClientProtocolException, IOException{
-		String body = crawl(url,charset);
+	public News getSina(String url, String charset) {
+		String body = HttpTools.getContent(url,charset);
 //		System.out.println(body);
         Document doc = Jsoup.parse(body);
+        System.out.println(body);
         Element mainBody = doc.getElementById("J_Article_Wrap");
+        System.out.println(mainBody);
 //        System.out.println(mainBody.text());
         String title = mainBody.getElementById("artibodyTitle").text();
         News sinaNews = new News();
@@ -49,5 +49,10 @@ public class NewsCrawler extends AbstractCrawler{
         	}
         }
         return sinaNews;
+	}
+
+	public String crawl(String url, String charset) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
