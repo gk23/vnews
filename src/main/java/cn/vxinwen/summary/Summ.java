@@ -1,6 +1,8 @@
 package cn.vxinwen.summary;
 
+import java.util.List;
+
 public interface Summ {
-	String summarize(String content);
+	String summarize(List<String> sections);
 	
 }

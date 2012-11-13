@@ -23,10 +23,8 @@ public class NewsCrawler extends AbstractCrawler{
 		String body = HttpTools.getContent(url,charset);
 //		System.out.println(body);
         Document doc = Jsoup.parse(body);
-        System.out.println(body);
         Element mainBody = doc.getElementById("J_Article_Wrap");
-        System.out.println(mainBody);
-//        System.out.println(mainBody.text());
+//      System.out.println(mainBody.text());
         String title = mainBody.getElementById("artibodyTitle").text();
         News sinaNews = new News();
         sinaNews.setTitle(title);
@@ -42,9 +40,9 @@ public class NewsCrawler extends AbstractCrawler{
         
         // 获得图片地址
         Elements divs = mainBody.getElementsByClass("img_wrapper");
-        if(divs.size()>=0){
+        if(divs.size()>0){
         	Elements imgs= divs.get(0).getElementsByTag("img");
-        	if(imgs.size()>=0){
+        	if(imgs.size()>0){
         		sinaNews.setImageAddress(imgs.get(0).attr("src"));
         	}
         }

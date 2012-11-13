@@ -1,5 +1,7 @@
 package cn.vxinwen.summary.strategy;
 
+import java.util.List;
+
 import cn.vxinwen.summary.Summ;
 
 /**
@@ -30,6 +32,7 @@ public class SimpleSumm implements Summ {
 		}
 	}
 
+    private static int MAX_WORD_COUNT = 140;
 	/**
 	 * content: 每句需要带标点，即句号或叹号的标点符号。
 	 */
@@ -85,5 +88,10 @@ public class SimpleSumm implements Summ {
 			if (f) {
 				System.out.println(f);
 			}
+	}
+	public String summarize(List<String> sections) {
+		String test="中国";
+		System.out.println(test.split("。"));
+		return null;
 	}
 }
