@@ -14,9 +14,13 @@ public class NewsCrawlerTest {
 		News sinanews = crawler.getSina(url, charset);
 		System.out.println(sinanews.getTitle());
 		System.out.println(sinanews.getImageAddress());
-		System.out.println(sinanews.getSections().size());
-		for(String sec:sinanews.getSections()){
-			System.out.println(sec);
+		System.out.println(sinanews.getSections().length);
+		int i=1;
+		for(String[] sec:sinanews.getSections()){
+		    System.out.println("第"+i+++"段：");
+			for(String sentence:sec){
+			    System.out.println(sentence);
+			}
 		}
 	}
 }

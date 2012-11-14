@@ -1,13 +1,14 @@
 package cn.vxinwen.bean;
 
-import java.util.List;
 
 public class News {
 
 	private String imageAddress;
 	private String title;
-	private List<String> sections;
-	private String content;
+	private String[][] sections;
+
+
+    private String content;
 
     private String summary;
 
@@ -23,12 +24,6 @@ public class News {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public List<String> getSections() {
-		return sections;
-	}
-	public void setSections(List<String> sections) {
-		this.sections = sections;
-	}
     public String getSummary() {
         return summary;
     }
@@ -40,5 +35,11 @@ public class News {
     }
     public void setContent(String content) {
         this.content = content;
+    }
+    public void setSections(String[][] sections) {
+        this.sections = sections;
+    }
+    public String[][] getSections() {
+        return sections;
     }
 }
