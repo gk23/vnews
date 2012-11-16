@@ -1,8 +1,9 @@
-package cn.vxinwen.summary.strategy;
+package net.vxinwen.summary.strategy;
 
 import java.util.List;
 
-import cn.vxinwen.summary.Summ;
+import net.vxinwen.summary.Summ;
+
 
 /**
  * 每段随机抽取一句

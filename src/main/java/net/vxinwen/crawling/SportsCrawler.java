@@ -1,4 +1,4 @@
-package cn.vxinwen.crawling;
+package net.vxinwen.crawling;
 
 public class SportsCrawler extends AbstractCrawler{
 //

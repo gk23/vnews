@@ -1,4 +1,4 @@
-package cn.vxinwen.summary;
+package net.vxinwen.summary;
 
 import java.util.List;
 

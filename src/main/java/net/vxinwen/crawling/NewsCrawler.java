@@ -1,15 +1,16 @@
-package cn.vxinwen.crawling;
+package net.vxinwen.crawling;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import net.vxinwen.bean.News;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import cn.vxinwen.bean.News;
 
 public class NewsCrawler extends AbstractCrawler {
     private String[] websites = { "http://news.sina.com.cn", "news.163.com", "http://v.tom.com/" };

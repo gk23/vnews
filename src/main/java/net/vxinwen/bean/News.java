@@ -1,4 +1,4 @@
-package cn.vxinwen.bean;
+package net.vxinwen.bean;
 
 
 public class News {

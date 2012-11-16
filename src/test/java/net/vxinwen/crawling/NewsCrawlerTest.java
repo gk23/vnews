@@ -1,8 +1,10 @@
-package cn.vxinwen.crawling;
+package net.vxinwen.crawling;
+
+import net.vxinwen.bean.News;
+import net.vxinwen.crawling.NewsCrawler;
 
 import org.junit.Test;
 
-import cn.vxinwen.bean.News;
 
 public class NewsCrawlerTest {
 	private NewsCrawler crawler = new NewsCrawler();

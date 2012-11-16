@@ -1,8 +1,9 @@
-package cn.vxinwen.summary;
+package net.vxinwen.summary;
 
 import java.util.List;
 
-import cn.vxinwen.summary.strategy.SimpleSumm;
+import net.vxinwen.summary.strategy.SimpleSumm;
+
 
 public class Context {
 	private Summ summ;

@@ -1,4 +1,4 @@
-package cn.vxinwen.crawling;
+package net.vxinwen.crawling;
 
 import java.util.Map;
 

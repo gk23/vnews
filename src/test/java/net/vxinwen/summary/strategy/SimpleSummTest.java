@@ -1,9 +1,11 @@
-package cn.vxinwen.summary.strategy;
+package net.vxinwen.summary.strategy;
+
+import net.vxinwen.bean.News;
+import net.vxinwen.crawling.NewsCrawler;
+import net.vxinwen.summary.strategy.SimpleSumm;
 
 import org.junit.Test;
 
-import cn.vxinwen.bean.News;
-import cn.vxinwen.crawling.NewsCrawler;
 
 
 public class SimpleSummTest {
@@ -12,8 +14,8 @@ public class SimpleSummTest {
 	@Test
 	public void testSummrize()throws Exception{
 		summ = new SimpleSumm();
-		String url = "http://ent.sina.com.cn/s/m/2012-11-14/16543787893.shtml";
-//	    String url = "http://sports.sina.com.cn/nba/2012-11-10/13486290723.shtml";
+//		String url = "http://news.sina.com.cn/c/2012-11-16/003725590136.shtml";
+	    String url = "http://sports.sina.com.cn/nba/2012-11-10/13486290723.shtml";
 		News news= new NewsCrawler().getSina(url,"gb2312");
         System.out.println(news.getTitle());
         System.out.println(news.getImageAddress());
