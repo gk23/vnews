@@ -27,4 +27,13 @@ public class NewsSummaryGenDao extends BaseDao<NewsSummaryGen>{
 			return null;
 		}
 	}
+	
+	public Timestamp getLastTime(){
+		NewsSummaryGen nsg = queryList("select * from news_summary_gen limit 1").get(0);
+		return nsg.getLastTime();
+	}
+	
+	public boolean updateLastTime(Timestamp lastTime){
+		return execute("update news_summary_gen set last_time='"+lastTime.toString()+"'");
+	}
 }
