@@ -2,8 +2,9 @@ package net.vxinwen.summary.strategy;
 
 import java.util.List;
 
-import net.vxinwen.summary.Summ;
+import org.apache.log4j.Logger;
 
+import net.vxinwen.summary.Summ;
 
 /**
  * 每段随机抽取一句
@@ -16,9 +17,12 @@ public class SimpleSumm implements Summ {
 	private static int MAX_WORD = 140;
 	private int remainWord = MAX_WORD;
 	private int maxSentence = 0;
-	private boolean[][] isChosed; //默认都为false
+	private boolean[][] isChosed; // 默认都为false
+	private Logger logger = Logger.getLogger(SimpleSumm.class);
 
 	public void init(String[][] content) {
+		logger.debug("The length of conntent to be summarized is "
+				+ content.length);
 		// 初始化选择句子的标志位,计算最大段落的句子数
 		int sectionCount = content.length;
 		isChosed = new boolean[sectionCount][];
@@ -38,11 +42,13 @@ public class SimpleSumm implements Summ {
 	 */
 	public String summarize(String[][] content) {
 		init(content);
+		if (isChosed == null || isChosed.length == 0)
+			return null;
 		int sectionCount = content.length;
 		// 取首句
 		isChosed[0][0] = true;
 		remainWord -= content[0][0].length();
-		
+
 		// 取尾部句子
 		if (sectionCount > 1 && !isExceeded(content[sectionCount - 1][0])) {
 			isChosed[sectionCount - 1][0] = true;
@@ -72,10 +78,6 @@ public class SimpleSumm implements Summ {
 		return sb.toString();
 	}
 
-	public String summarize(String content) {
-		return null;
-	}
-
 	public boolean isExceeded(String toBeAddedString) {
 		// isExceeded为true则不能添加此句
 		return toBeAddedString.length() > remainWord;
@@ -89,10 +91,5 @@ public class SimpleSumm implements Summ {
 			if (f) {
 				System.out.println(f);
 			}
-	}
-	public String summarize(List<String> sections) {
-		String test="中国";
-		System.out.println(test.split("。"));
-		return null;
 	}
 }

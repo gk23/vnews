@@ -1,13 +1,11 @@
 package net.vxinwen.summary;
 
-import java.util.List;
-
 import net.vxinwen.summary.strategy.SimpleSumm;
 
 
-public class Context {
+public class SummaryGenerator {
 	private Summ summ;
-	public String summarize(List<String> sections){
+	public String summarize(String[][] sections){
 		summ = new SimpleSumm();
 		return summ.summarize(sections);
 	}
