@@ -35,7 +35,7 @@ public class GetNewsServlet extends HttpServlet {
 	}
 
 	/**
-	 * The doGet method of the servlet. <br>
+	 * 请求格式getNews?ids=101##36##321&tags=头条##体育##娱乐，需要UTF-8编码
 	 * 
 	 * This method is called when a form has its tag value method equals to get.
 	 * 
@@ -51,28 +51,35 @@ public class GetNewsServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 传入tags列表，多项以##分割
+		// request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/json;charset=UTF-8");
 		String tags = request.getParameter("tags");
 		String ids = request.getParameter("ids");
+		// 这一行不是必须的，上面已经设置，下一行是必须的。同时，访问页面的编码必须是utf-8
 		String result = "{}";
 		PrintWriter out = response.getWriter();
 		UpdateNewsService updateNewsService = new UpdateNewsService();
 		if (tags != null && tags.trim().length() > 0 && ids != null
 				&& ids.trim().length() > 0) {
 			// 添加最新news，
-			String[] tagslist = tags.split("##");
-			String[] idslist = ids.split("##");
-			result  = updateNewsService.get(convertStringToLong(idslist), tagslist);
+			String[] tagslist = tags.split("\\$\\$");
+			String[] idslist = ids.split("\\$\\$");
+			if (tagslist.length == idslist.length) {
+				long[] longIds = convertStringToLong(idslist);
+				result = updateNewsService.get(longIds, tagslist);
+			}
 		}
 		out.print(result);
-
 	}
+
 	private long[] convertStringToLong(String[] idslist) {
 		long[] longIds = new long[idslist.length];
-		for(int i=0;i<idslist.length;i++){
-			longIds[i]=Long.parseLong(idslist[i]);
+		for (int i = 0; i < idslist.length; i++) {
+			longIds[i] = Long.parseLong(idslist[i]);
 		}
 		return longIds;
 	}
+
 	/**
 	 * The doPost method of the servlet. <br>
 	 * 

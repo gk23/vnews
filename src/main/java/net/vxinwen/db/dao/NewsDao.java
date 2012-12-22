@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,26 +60,32 @@ public class NewsDao extends BaseDao<News> {
 	 * @param categories
 	 * @return
 	 */
-	public Map<String, List<News>> getLastNewsBatch(long[] lastIds, String[] categories) {
-		String sql = "select * from news where id>? and category=? order by modify_time desc limit 30";
-		Connection conn =new DataSourceFactory().getConnection();
-		Map<String, List<News>> result = new HashMap<String, List<News>> ();
-		try {
-			conn.setAutoCommit(false);
-			PreparedStatement ps = conn.prepareStatement(sql);
 
-			for(int i=0;i<categories.length;i++){
+	public Map<String, List<News>> getLastNewsBatch(long[] lastIds,
+			String[] categories) {
+		String sqlTemplate = "select * from news where id>? and category=? and summary is not null order by modify_time desc limit 30";
+		Connection conn = new DataSourceFactory().getConnection();
+		Map<String, List<News>> res = new HashMap<String, List<News>>();
+		List<News> list = null;
+		News news = null;
+		ResultSet rs = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqlTemplate);
+			for (int i = 0; i < categories.length; i++) {
+				list = new ArrayList<News>();
 				ps.setLong(1, lastIds[i]);
 				ps.setString(2, categories[i]);
-				ResultSet rs = ps.executeQuery();
-				// TODO 重写这个方法，分别查询各类后，存入一个Map中 （category:List<News>）
-				rs.next()
-				
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					news = getObjectByResult(rs);
+					list.add(news);
+				}
+				res.put(categories[i], list);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
+		return res;
 	}
 
 	/**

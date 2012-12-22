@@ -11,6 +11,9 @@ public class News {
 	private String url;
 	private String content;
 	private String summary;
+	/**
+	 * 暂时没用，以后用于用户定制新闻，组件替代category字段
+	 */
 	private String tags;
 	private Timestamp publishTime;
 	private Timestamp modifyTime;

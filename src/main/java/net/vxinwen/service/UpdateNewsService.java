@@ -1,5 +1,8 @@
 package net.vxinwen.service;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +24,8 @@ public class UpdateNewsService {
 		// dao query returns Map<category,List<News>>
 		// convert to JSON
 		NewsDao newsDao = null;
-		String result ="{}";
-		Map<String, List<News>> newses =null;
+		String result = "{}";
+		Map<String, List<News>> newses = null;
 		if (idslist.length == tagslist.length) {
 			newses = newsDao.getLastNewsBatch(idslist, tagslist);
 			result = convertToJson(newses);
@@ -30,10 +33,50 @@ public class UpdateNewsService {
 		return result;
 	}
 
+	/**
+	 * 格式如下：{cat1:[{news1},{news2}],cat2:[{news1},{news2}]}
+	 * 
+	 * @param newses
+	 * @return
+	 */
 	public String convertToJson(Map<String, List<News>> newses) {
 		String res = "{}";
-		// TODO
+		Iterator<String> it = newses.keySet().iterator();
+		JSONObject json = new JSONObject();
+		JSONObject newsJson = null;
+		while (it.hasNext()) {
+			String cat = it.next();
+			List<News> newslist = newses.get(cat);
+			JSONArray newsJsonArray = new JSONArray();
+			for (News news : newslist) {
+				newsJson = newsToJson(news);
+				if (newsJson != null)
+					newsJsonArray.add(newsJson);
+			}
+			json.put(cat, newsJsonArray);
+		}
+		res = json.toJSONString();
 		return res;
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject newsToJson(News news) {
+		if (news.getSummary() == null || news.getSummary().trim().length() == 0)
+			return null;
+		JSONObject json = new JSONObject();
+		json.put("id", news.getId());
+		json.put("title", news.getTitle());
+		json.put("category", news.getCategory());
+		json.put("url", news.getUrl());
+		json.put("publishTime", timeStampToString(news.getPublishTime()));
+		json.put("imageAddress", news.getImageAddress());
+		json.put("summary", news.getSummary());
+		return json;
+	}
+
+	private String timeStampToString(Timestamp ts) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return sdf.format(ts);
 	}
 
 	public static void main(String[] args) {
@@ -60,6 +103,7 @@ public class UpdateNewsService {
 		System.out.println(json.toJSONString());
 
 		String result = "{\"name\":\"中国\",\"provinces\":[{\"cities\":[\"哈尔滨\",\"齐齐哈尔\"],\"name\":\"黑龙江\"},{\"cities\":[\"朝阳\",\"海淀\"],\"name\":\"北京\"}]}";
+		// String result="{}";
 		JSONObject json1 = (JSONObject) JSONValue.parse(result);
 		System.out.println(json1.toJSONString());
 		System.out.println(json1.get("name"));
