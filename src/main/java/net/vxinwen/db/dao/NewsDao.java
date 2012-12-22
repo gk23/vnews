@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.vxinwen.bean.News;
 import net.vxinwen.db.DataSourceFactory;
@@ -57,24 +59,26 @@ public class NewsDao extends BaseDao<News> {
 	 * @param categories
 	 * @return
 	 */
-	public List<News> getLastNewsBatch(long[] lastIds, String[] categories) {
+	public Map<String, List<News>> getLastNewsBatch(long[] lastIds, String[] categories) {
 		String sql = "select * from news where id>? and category=? order by modify_time desc limit 30";
 		Connection conn =new DataSourceFactory().getConnection();
+		Map<String, List<News>> result = new HashMap<String, List<News>> ();
 		try {
 			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(sql);
+
 			for(int i=0;i<categories.length;i++){
 				ps.setLong(1, lastIds[i]);
 				ps.setString(2, categories[i]);
-				ps.addBatch();
-				ps.clearParameters();
+				ResultSet rs = ps.executeQuery();
 				// TODO 重写这个方法，分别查询各类后，存入一个Map中 （category:List<News>）
+				rs.next()
+				
 			}
-			ps.executeBatch();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return result;
 	}
 
 	/**

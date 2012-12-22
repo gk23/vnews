@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.vxinwen.bean.News;
+import net.vxinwen.db.dao.NewsDao;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,15 +17,22 @@ public class UpdateNewsService {
 	 * 
 	 * @return JSON格式的新闻列表
 	 */
-	public String get(long lastId, String category) {
+	public String get(long[] idslist, String[] tagslist) {
 		// dao query returns Map<category,List<News>>
 		// convert to JSON
-		return "";
+		NewsDao newsDao = null;
+		String result ="{}";
+		Map<String, List<News>> newses =null;
+		if (idslist.length == tagslist.length) {
+			newses = newsDao.getLastNewsBatch(idslist, tagslist);
+			result = convertToJson(newses);
+		}
+		return result;
 	}
-	
-	public String convertToJson(Map<String,List<News>> newses){
-		String res="{}";
-		// TODO 
+
+	public String convertToJson(Map<String, List<News>> newses) {
+		String res = "{}";
+		// TODO
 		return res;
 	}
 
@@ -55,6 +63,7 @@ public class UpdateNewsService {
 		JSONObject json1 = (JSONObject) JSONValue.parse(result);
 		System.out.println(json1.toJSONString());
 		System.out.println(json1.get("name"));
-		System.out.println(((JSONObject)((JSONArray)json.get("provinces")).get(0)).get("name"));
+		System.out.println(((JSONObject) ((JSONArray) json.get("provinces"))
+				.get(0)).get("name"));
 	}
 }

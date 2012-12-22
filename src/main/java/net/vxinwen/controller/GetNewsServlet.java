@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.vxinwen.db.dao.NewsDao;
+import net.vxinwen.service.UpdateNewsService;
 
 /**
  * 同步接口
@@ -54,21 +55,17 @@ public class GetNewsServlet extends HttpServlet {
 		String ids = request.getParameter("ids");
 		String result = "{}";
 		PrintWriter out = response.getWriter();
-		NewsDao newsDao = null;
+		UpdateNewsService updateNewsService = new UpdateNewsService();
 		if (tags != null && tags.trim().length() > 0 && ids != null
 				&& ids.trim().length() > 0) {
 			// 添加最新news，
 			String[] tagslist = tags.split("##");
 			String[] idslist = ids.split("##");
-			if (tagslist.length == idslist.length) {
-				long[] longIds= convertStringToLong(idslist);
-				newsDao.getLastNewsBatch(longIds, tagslist);
-			}
+			result  = updateNewsService.get(convertStringToLong(idslist), tagslist);
 		}
 		out.print(result);
 
 	}
-
 	private long[] convertStringToLong(String[] idslist) {
 		long[] longIds = new long[idslist.length];
 		for(int i=0;i<idslist.length;i++){
@@ -76,7 +73,6 @@ public class GetNewsServlet extends HttpServlet {
 		}
 		return longIds;
 	}
-
 	/**
 	 * The doPost method of the servlet. <br>
 	 * 
