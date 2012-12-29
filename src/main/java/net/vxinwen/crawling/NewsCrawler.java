@@ -81,7 +81,6 @@ public class NewsCrawler extends AbstractCrawler {
     }
 
     public String crawl(String url, String charset) {
-        // TODO Auto-generated method stub
         return null;
     }
 

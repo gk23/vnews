@@ -39,7 +39,7 @@ public class UpdateNewsService {
 	 * @param newses
 	 * @return
 	 */
-	public String convertToJson(Map<String, List<News>> newses) {
+	private String convertToJson(Map<String, List<News>> newses) {
 		String res = "{}";
 		Iterator<String> it = newses.keySet().iterator();
 		JSONObject json = new JSONObject();
@@ -60,7 +60,7 @@ public class UpdateNewsService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public JSONObject newsToJson(News news) {
+	private JSONObject newsToJson(News news) {
 		if (news.getSummary() == null || news.getSummary().trim().length() == 0)
 			return null;
 		JSONObject json = new JSONObject();

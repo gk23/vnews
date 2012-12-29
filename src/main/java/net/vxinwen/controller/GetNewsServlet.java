@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.vxinwen.db.dao.NewsDao;
 import net.vxinwen.service.UpdateNewsService;
 
 /**
@@ -50,18 +49,16 @@ public class GetNewsServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 传入tags列表，多项以##分割
 		// request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/json;charset=UTF-8");
 		String tags = request.getParameter("tags");
 		String ids = request.getParameter("ids");
-		// 这一行不是必须的，上面已经设置，下一行是必须的。同时，访问页面的编码必须是utf-8
 		String result = "{}";
 		PrintWriter out = response.getWriter();
 		UpdateNewsService updateNewsService = new UpdateNewsService();
 		if (tags != null && tags.trim().length() > 0 && ids != null
 				&& ids.trim().length() > 0) {
-			// 添加最新news，
+		    // 传入tags列表，多项以$$分割
 			String[] tagslist = tags.split("\\$\\$");
 			String[] idslist = ids.split("\\$\\$");
 			if (tagslist.length == idslist.length) {
