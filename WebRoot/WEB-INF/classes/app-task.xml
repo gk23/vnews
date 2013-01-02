@@ -15,7 +15,8 @@
     </bean>
     <bean id="generateSummaryTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="generateSummaryTaskJobDetail" />
-        <property name="cronExpression" value="0/5 * * * * ?" />
+        <!-- 目前测试，每30分钟运行一次，以后改为每1分钟运行一次即可： 0 * * * * ? -->
+        <property name="cronExpression" value="0 0/30 * * * ?" />
     </bean>
 
     <!-- 定时任务列表 -->
