@@ -23,7 +23,7 @@ public class UpdateNewsService {
 	public String get(long[] idslist, String[] tagslist) {
 		// dao query returns Map<category,List<News>>
 		// convert to JSON
-		NewsDao newsDao = null;
+		NewsDao newsDao = new NewsDao();
 		String result = "{}";
 		Map<String, List<News>> newses = null;
 		if (idslist.length == tagslist.length) {

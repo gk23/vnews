@@ -16,6 +16,7 @@ public class GenerateSummaryTask {
 	 * 将数据库的内容生成摘要的任务
 	 */
 	public void generate() {
+	    logger.debug("==========执行生成摘要任务==========");
 		// 识别哪些还没有做摘要
 		NewsSummaryGenDao nsgDao = new NewsSummaryGenDao();
 		Timestamp lastTime = nsgDao.getLastTime();
