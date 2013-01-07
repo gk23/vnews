@@ -63,7 +63,7 @@ public class NewsDao extends BaseDao<News> {
      */
 
     public Map<String, List<News>> getLastNewsBatch(long[] lastIds, String[] categories) {
-        String sqlTemplate = "select * from news where id>? and category=? and summary is not null order by modify_time desc limit 30";
+        String sqlTemplate = "select * from news where id>? and category=? and summary is not null order by publish_time desc limit 30";
         Connection conn = new DataSourceFactory().getConnection();
         Map<String, List<News>> res = new HashMap<String, List<News>>();
         List<News> list = null;

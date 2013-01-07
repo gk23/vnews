@@ -9,6 +9,7 @@ import java.util.Map;
 
 import net.vxinwen.bean.News;
 import net.vxinwen.db.dao.NewsDao;
+import net.vxinwen.util.TimestampUtil;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -68,16 +69,13 @@ public class UpdateNewsService {
         json.put("title", news.getTitle());
         json.put("category", news.getCategory());
         json.put("url", news.getUrl());
-        json.put("publishTime", timeStampToString(news.getPublishTime()));
+        json.put("publishTime", TimestampUtil.timeStampToString(news.getPublishTime()));
         json.put("imageAddress", news.getImageAddress());
         json.put("summary", news.getSummary());
         return json;
     }
 
-    private String timeStampToString(Timestamp ts) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        return sdf.format(ts);
-    }
+
 
     public static void main(String[] args) {
         JSONObject json = new JSONObject();
