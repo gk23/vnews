@@ -10,12 +10,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import net.vxinwen.bean.News;
 import net.vxinwen.db.DataSourceFactory;
 import net.vxinwen.preprocess.SinaNewsPreProcess;
 import net.vxinwen.summary.SummaryGenerator;
 
 public class NewsDao extends BaseDao<News> {
+    
+    private static Logger log = Logger.getLogger(NewsDao.class); 
 
     @Override
     public News getObjectByResult(ResultSet result) {
@@ -64,7 +68,11 @@ public class NewsDao extends BaseDao<News> {
 
     public Map<String, List<News>> getLastNewsBatch(long[] lastIds, String[] categories) {
         String sqlTemplate = "select * from news where id>? and category=? and summary is not null order by publish_time desc limit 30";
+        long s = System.currentTimeMillis();
         Connection conn = new DataSourceFactory().getConnection();
+        long e=System.currentTimeMillis();
+        log.debug("get db connection costs "+(e-s)+"ms");
+        
         Map<String, List<News>> res = new HashMap<String, List<News>>();
         List<News> list = null;
         News news = null;
@@ -75,15 +83,24 @@ public class NewsDao extends BaseDao<News> {
                 list = new ArrayList<News>();
                 ps.setLong(1, lastIds[i]);
                 ps.setString(2, categories[i]);
+                s = System.currentTimeMillis();
                 rs = ps.executeQuery();
+                e = System.currentTimeMillis();
+                log.debug("query ["+categories[i]+"] costs "+(e-s)+"ms");
+                
                 while (rs.next()) {
                     news = getObjectByResult(rs);
                     list.add(news);
                 }
                 res.put(categories[i], list);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } finally{
+            s = System.currentTimeMillis();
+            DataSourceFactory.closeConnection(conn);
+            e = System.currentTimeMillis();
+            log.debug("close connection costs "+(e-s)+"ms");
         }
         return res;
     }
