@@ -1,30 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	<!--contextConfigLocation在 ContextLoaderListener类中的默认值是 /WEB-INF/applicationContext.xml -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<!--<param-value>/WEB-INF/applicationContext.xml</param-value> -->
-		<param-value>classpath:app-*.xml</param-value>
-	</context-param>
-	<servlet>
-		<description>GetNewsServlet</description>
-		<display-name>GetNewsServlet</display-name>
-		<servlet-name>GetNewsServlet</servlet-name>
-		<servlet-class>net.vxinwen.controller.GetNewsServlet</servlet-class>
-	</servlet>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!--contextConfigLocation在 ContextLoaderListener类中的默认值是 /WEB-INF/applicationContext.xml -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <!--<param-value>/WEB-INF/applicationContext.xml</param-value> -->
+        <param-value>classpath:app-*.xml</param-value>
+    </context-param>
+    <servlet>
+        <description>GetNewsServlet</description>
+        <display-name>GetNewsServlet</display-name>
+        <servlet-name>GetNewsServlet</servlet-name>
+        <servlet-class>net.vxinwen.controller.GetNewsServlet</servlet-class>
+    </servlet>
 
-	<servlet-mapping>
-		<servlet-name>GetNewsServlet</servlet-name>
-		<url-pattern>/getNews</url-pattern>
-	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>GetNewsServlet</servlet-name>
+        <url-pattern>/getNews</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <description>InitDBPoolServlet</description>
+        <display-name>InitDBPoolServlet</display-name>
+        <servlet-name>InitDBPoolServlet</servlet-name>
+        <servlet-class>net.vxinwen.controller.InitDBPoolServlet</servlet-class>
+        <!-- 此值>=0时Tomcat启动时加载，值越小优先级越高 -->
+       <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
