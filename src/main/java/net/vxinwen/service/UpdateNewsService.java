@@ -3,6 +3,7 @@ package net.vxinwen.service;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -113,10 +114,20 @@ public class UpdateNewsService {
 //        System.out.println(json2);
 //        System.out.println(((JSONArray) json2.get("cate")).size());
 
-        Object[][] a = new Object[1][2];
-        a[0][0] = 1l;
-        a[0][1] = "test";
-        System.out.println(a[0][0].getClass());
-        System.out.println(a[0][1].getClass());
+        String json ="{\"财经\":[]}";
+        JSONObject jsonobj =(JSONObject) JSONValue.parse(json);
+        Iterator it = jsonobj.keySet().iterator();
+        while (it.hasNext()) {
+            String category = (String) it.next();
+            JSONArray newsArray = (JSONArray) jsonobj.get(category);
+            System.out.println(newsArray.size());
+            List<News> newsList = new ArrayList<News>(newsArray.size());
+            for (int i = 0; i < newsArray.size(); i++) {
+                System.out.println(newsList.get(0));
+            }
+            System.out.println(newsList);
+            System.out.println(newsList.size());
+        }
+        
     }
 }

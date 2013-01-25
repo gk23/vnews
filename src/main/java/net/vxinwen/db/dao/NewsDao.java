@@ -26,8 +26,6 @@ public class NewsDao extends BaseDao<News> {
         News news = new News();
         try {
             news.setId(result.getLong("id"));
-            String body = result.getString("body");
-            String title = result.getString("title");
             news.setContent(result.getString("body"));
             news.setTitle(result.getString("title"));
             news.setImageAddress(result.getString("image"));
