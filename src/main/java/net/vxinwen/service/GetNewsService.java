@@ -1,8 +1,5 @@
 package net.vxinwen.service;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,18 +13,24 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-public class UpdateNewsService {
+/**
+ * 为客户端提供新闻获取服务
+ * 
+ * @author Administrator
+ *
+ */
+public class GetNewsService {
     /**
      * 同步策略: 1.返回当前的最新新闻， 2.如果点击更多，同步他上次同步的到今天最新的之间的新闻。
      * 3.每次每个类别返回<=30条最新的，如果最新的不够30，返回实际条数
      * 
      * @return JSON格式的新闻列表
      */
-    public String get(long[] idslist, String[] tagslist) {
+    public JSONObject get(long[] idslist, String[] tagslist) {
         // dao query returns Map<category,List<News>>
         // convert to JSON
         NewsDao newsDao = new NewsDao();
-        String result = "{}";
+        JSONObject result = null;
         Map<String, List<News>> newses = null;
         if (idslist.length == tagslist.length) {
             newses = newsDao.getLastNewsBatch(idslist, tagslist);
@@ -42,10 +45,11 @@ public class UpdateNewsService {
      * @param newses
      * @return
      */
-    private String convertToJson(Map<String, List<News>> newses) {
+    private JSONObject convertToJson(Map<String, List<News>> newses) {
         String res = "{}";
         Iterator<String> it = newses.keySet().iterator();
         JSONObject json = new JSONObject();
+        
         JSONObject newsJson = null;
         while (it.hasNext()) {
             String cat = it.next();
@@ -58,8 +62,7 @@ public class UpdateNewsService {
             }
             json.put(cat, newsJsonArray);
         }
-        res = json.toJSONString();
-        return res;
+        return json;
     }
 
     @SuppressWarnings("unchecked")
@@ -72,8 +75,9 @@ public class UpdateNewsService {
         json.put("category", news.getCategory());
         json.put("url", news.getUrl());
         json.put("publishTime", TimestampUtil.timeStampToString(news.getPublishTime()));
-        json.put("imageAddress", news.getImageAddress());
+        json.put("imageAddress", news.getImage());
         json.put("summary", news.getSummary());
+        json.put("source", news.getSource());
         return json;
     }
 

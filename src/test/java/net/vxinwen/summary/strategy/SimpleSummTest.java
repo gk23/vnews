@@ -18,7 +18,7 @@ public class SimpleSummTest {
 	    String url = "http://sports.sina.com.cn/nba/2012-11-10/13486290723.shtml";
 		News news= new NewsCrawler().getSina(url,"gb2312");
         System.out.println(news.getTitle());
-        System.out.println(news.getImageAddress());
+        System.out.println(news.getImage());
         System.out.println(news.getSections().length);
         int i=1;
         for(String[] sec:news.getSections()){

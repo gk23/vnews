@@ -32,7 +32,7 @@ public class SimpleSumm implements Summ {
                 wordCount += content[i][j].length();
             }
         }
-        logger.debug("The content to be summarized has" + content.length + "sections, "
+        logger.debug("The content to be summarized has " + content.length + " sections, "
                 + sentenceCount + " sentences, and " + wordCount + " words");
         // 初始化选择句子的标志位,计算最大段落的句子数
         int sectionCount = content.length;

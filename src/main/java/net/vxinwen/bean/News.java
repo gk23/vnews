@@ -4,19 +4,29 @@ import java.sql.Timestamp;
 
 public class News {
 	private long id;
-	private String imageAddress;
+	private String image;
 	private String title;
 	private String[][] sections;
 	private String category;
 	private String url;
-	private String content;
+	private String body;
 	private String summary;
-	/**
-	 * 暂时没用，以后用于用户定制新闻，组件替代category字段
-	 */
-	private String tags;
-	private Timestamp publishTime;
-	private Timestamp modifyTime;
+	private String source;
+    /**
+     * 暂时没用，以后用于用户定制新闻，组件替代category字段
+     */
+    private String tags;
+    private Timestamp publishTime;
+    private Timestamp modifyTime;
+	public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+
 
 	public Timestamp getModifyTime() {
 		return modifyTime;
@@ -66,12 +76,12 @@ public class News {
 		this.url = url;
 	}
 
-	public String getImageAddress() {
-		return imageAddress;
+	public String getImage() {
+		return image;
 	}
 
-	public void setImageAddress(String imageAddress) {
-		this.imageAddress = imageAddress;
+	public void setImage(String imageAddress) {
+		this.image = imageAddress;
 	}
 
 	public String getTitle() {
@@ -90,12 +100,12 @@ public class News {
 		this.summary = summary;
 	}
 
-	public String getContent() {
-		return content;
+	public String getBody() {
+		return body;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setBody(String content) {
+		this.body = content;
 	}
 
 	public void setSections(String[][] sections) {

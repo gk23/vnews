@@ -18,17 +18,17 @@ import net.vxinwen.preprocess.SinaNewsPreProcess;
 import net.vxinwen.summary.SummaryGenerator;
 
 public class NewsDao extends BaseDao<News> {
-    
-    private static Logger log = Logger.getLogger(NewsDao.class); 
+
+    private static Logger log = Logger.getLogger(NewsDao.class);
 
     @Override
     public News getObjectByResult(ResultSet result) {
         News news = new News();
         try {
             news.setId(result.getLong("id"));
-            news.setContent(result.getString("body"));
+            news.setBody(result.getString("body"));
             news.setTitle(result.getString("title"));
-            news.setImageAddress(result.getString("image"));
+            news.setImage(result.getString("image"));
             news.setSummary(result.getString("summary"));
             news.setCategory(result.getString("category"));
             news.setUrl(result.getString("url"));
@@ -68,9 +68,9 @@ public class NewsDao extends BaseDao<News> {
         String sqlTemplate = "select * from news where id>? and category=? and summary is not null order by publish_time desc limit 30";
         long s = System.currentTimeMillis();
         Connection conn = new DataSourceFactory().getConnection();
-        long e=System.currentTimeMillis();
-        log.debug("get db connection costs "+(e-s)+"ms");
-        
+        long e = System.currentTimeMillis();
+        log.debug("get db connection costs " + (e - s) + "ms");
+
         Map<String, List<News>> res = new HashMap<String, List<News>>();
         List<News> list = null;
         News news = null;
@@ -84,8 +84,8 @@ public class NewsDao extends BaseDao<News> {
                 s = System.currentTimeMillis();
                 rs = ps.executeQuery();
                 e = System.currentTimeMillis();
-                log.debug("query ["+categories[i]+"] costs "+(e-s)+"ms");
-                
+                log.debug("query [" + categories[i] + "] costs " + (e - s) + "ms");
+
                 while (rs.next()) {
                     news = getObjectByResult(rs);
                     list.add(news);
@@ -94,11 +94,11 @@ public class NewsDao extends BaseDao<News> {
             }
         } catch (SQLException se) {
             se.printStackTrace();
-        } finally{
+        } finally {
             s = System.currentTimeMillis();
             DataSourceFactory.closeConnection(conn);
             e = System.currentTimeMillis();
-            log.debug("close connection costs "+(e-s)+"ms");
+            log.debug("close connection costs " + (e - s) + "ms");
         }
         return res;
     }
@@ -119,7 +119,7 @@ public class NewsDao extends BaseDao<News> {
             conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(updateSql);
             for (News news : newsList) {
-                content = news.getContent();
+                content = news.getBody();
                 if (content == null || content.trim().length() == 0)
                     continue;
                 sections = SinaNewsPreProcess.getSections(content);

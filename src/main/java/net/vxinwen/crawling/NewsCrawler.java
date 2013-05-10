@@ -74,7 +74,7 @@ public class NewsCrawler extends AbstractCrawler {
         if (divs.size() > 0) {
             Elements imgs = divs.get(0).getElementsByTag("img");
             if (imgs.size() > 0) {
-                sinaNews.setImageAddress(imgs.get(0).attr("src"));
+                sinaNews.setImage(imgs.get(0).attr("src"));
             }
         }
         return sinaNews;

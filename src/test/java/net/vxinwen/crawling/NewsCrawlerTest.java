@@ -15,7 +15,7 @@ public class NewsCrawlerTest {
 		String charset = "gb2312";
 		News sinanews = crawler.getSina(url, charset);
 		System.out.println(sinanews.getTitle());
-		System.out.println(sinanews.getImageAddress());
+		System.out.println(sinanews.getImage());
 		System.out.println(sinanews.getSections().length);
 		int i=1;
 		for(String[] sec:sinanews.getSections()){
