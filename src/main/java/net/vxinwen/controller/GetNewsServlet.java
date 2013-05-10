@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
+import net.vxinwen.service.GetJokeService;
 import net.vxinwen.service.GetNewsService;
 
 /**
@@ -20,7 +23,7 @@ import net.vxinwen.service.GetNewsService;
  */
 public class GetNewsServlet extends HttpServlet {
     private Logger logger = Logger.getLogger(GetNewsServlet.class);
-
+    private final static String DUANZI="段子";
     /**
      * Constructor of the object.
      */
@@ -58,28 +61,45 @@ public class GetNewsServlet extends HttpServlet {
         String ids = request.getParameter("ids");
         logger.debug("params [tags] is [" + tags + "], [ids] is [" + ids + "].");
         String result = "{}";
+        String formatError = "请求格式getNews?ids=101$$36$$321&tags=头条$$体育$$娱乐$$科技$$段子";
         PrintWriter out = response.getWriter();
-        GetNewsService updateNewsService = new GetNewsService();
-        if (tags != null && tags.trim().length() > 0 && ids != null && ids.trim().length() > 0) {
-            // 传入tags列表，多项以$$分割
-            String[] tagslist = tags.split("\\$\\$");
-            String[] idslist = ids.split("\\$\\$");
-            if (tagslist.length == idslist.length) {
-                logger.debug("tagslist.length is "+tagslist.length);
-                long[] longIds = convertStringToLong(idslist);
-                //if(isHaveJoke(tagslist))
-                    result = updateNewsService.get(longIds, tagslist).toJSONString();
-            }
+        if(tags == null || tags.trim().length() == 0||ids == null || ids.trim().length() == 0){
+            out.print(formatError);
+            return;
         }
-        out.print(result);
+        // 传入tags列表，多项以$$分割
+        String[] tagslist = tags.split("\\$\\$");
+        String[] idslist = ids.split("\\$\\$");
+        if (tagslist.length != idslist.length) {
+            out.print(formatError);
+            return;
+        }
+        logger.debug("tagslist.length is " + tagslist.length);
+        long[] longIds = convertStringToLong(idslist);
+        GetNewsService getNewsService = new GetNewsService();
+        GetJokeService getJokeService = new GetJokeService();
+        long duanziId = isHaveJoke(tagslist, longIds);
+        JSONObject newses = getNewsService.get(longIds, tagslist);
+        if (duanziId != -1) {
+            JSONArray jokes = getJokeService.get(duanziId);
+            newses.put(DUANZI, jokes);
+        }
+        out.print(newses.toJSONString());
     }
 
-    private boolean isHaveJoke(String[] tagslist) {
-        for (String tag : tagslist) {
-            if (tag.equals("段子"))
-                return true;
+    /**
+     * 如果包含"段子"则返回要查询的id，否则返回-1
+     *
+     * @param tagslist
+     * @param ids
+     * @return
+     */
+    private long isHaveJoke(String[] tagslist,long[] ids) {
+        for (int i=0;i<tagslist.length;i++) {
+            if (tagslist[i].equals(DUANZI))
+                return ids[i];
         }
-        return false;
+        return -1;
     }
 
     private long[] convertStringToLong(String[] idslist) {

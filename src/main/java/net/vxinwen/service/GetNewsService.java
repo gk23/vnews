@@ -75,8 +75,9 @@ public class GetNewsService {
         json.put("category", news.getCategory());
         json.put("url", news.getUrl());
         json.put("publishTime", TimestampUtil.timeStampToString(news.getPublishTime()));
-        json.put("imageAddress", news.getImage());
+        json.put("image", news.getImage());
         json.put("summary", news.getSummary());
+        json.put("body", news.getBody());
         json.put("source", news.getSource());
         return json;
     }

@@ -10,7 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class GetJokeService {
-    public JSONObject get(long id) {
+    public JSONArray get(long id) {
         // dao query returns Map<category,List<News>>
         // convert to JSON
         JokeDao jokeDao = new JokeDao();
@@ -18,19 +18,27 @@ public class GetJokeService {
         return convertToJson(jokes);
     }
 
-    private JSONObject convertToJson(List<Joke> jokes) {
-        JSONObject result = null;
+    /**
+     * joke不用摘要，直接返回原内容
+     * 
+     * @param jokes
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    private JSONArray convertToJson(List<Joke> jokes) {
         JSONArray values = new JSONArray();
         for(Joke joke:jokes){
             JSONObject json = new JSONObject();
             json.put("id", joke.getId());
             json.put("title", joke.getTitle());
-            json.put("obdy", joke.getBody());
             json.put("url", joke.getUrl());
             json.put("publishTime", TimestampUtil.timeStampToString(joke.getPublishTime()));
             json.put("image", joke.getImage());
             json.put("source", joke.getSource());
+            json.put("body", joke.getBody());
+            json.put("category", joke.getCategory());
+            values.add(json);
         }
-        return null;
+        return values;
     }
 }
