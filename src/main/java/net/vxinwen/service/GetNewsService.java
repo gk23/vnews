@@ -67,7 +67,7 @@ public class GetNewsService {
 
     @SuppressWarnings("unchecked")
     private JSONObject newsToJson(News news) {
-        if (news.getSummary() == null || news.getSummary().trim().length() == 0)
+        if (!news.getCategory().equals("段子")&&(news.getSummary() == null || news.getSummary().trim().length() == 0))
             return null;
         JSONObject json = new JSONObject();
         json.put("id", news.getId());
@@ -76,9 +76,12 @@ public class GetNewsService {
         json.put("url", news.getUrl());
         json.put("publishTime", TimestampUtil.timeStampToString(news.getPublishTime()));
         json.put("image", news.getImage());
-        json.put("summary", news.getSummary());
         json.put("body", news.getBody());
         json.put("source", news.getSource());
+        if(news.getCategory().equals("段子"))
+            json.put("summary", news.getBody());
+        else
+            json.put("summary", news.getSummary());
         return json;
     }
 

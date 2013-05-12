@@ -32,6 +32,7 @@ public class NewsDao extends BaseDao<News> {
             news.setSummary(result.getString("summary"));
             news.setCategory(result.getString("category"));
             news.setUrl(result.getString("url"));
+            news.setSource(result.getString("source"));
             news.setPublishTime(result.getTimestamp("publish_time"));
             news.setModifyTime(result.getTimestamp("modify_time"));
             return news;
@@ -66,6 +67,7 @@ public class NewsDao extends BaseDao<News> {
 
     public Map<String, List<News>> getLastNewsBatch(long[] lastIds, String[] categories) {
         String sqlTemplate = "select * from news where id>? and category=? and summary is not null order by publish_time desc limit 30";
+        String duanziSqlTemplate="select * from news where id>? and category=? order by publish_time desc limit 30";
         long s = System.currentTimeMillis();
         Connection conn = new DataSourceFactory().getConnection();
         long e = System.currentTimeMillis();
@@ -76,9 +78,14 @@ public class NewsDao extends BaseDao<News> {
         News news = null;
         ResultSet rs = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sqlTemplate);
+            PreparedStatement ps;
             for (int i = 0; i < categories.length; i++) {
                 list = new ArrayList<News>();
+                // 段子不需要摘要
+                if(categories[i].equals("段子"))
+                    ps= conn.prepareStatement(duanziSqlTemplate);
+                else
+                    ps = conn.prepareStatement(sqlTemplate);
                 ps.setLong(1, lastIds[i]);
                 ps.setString(2, categories[i]);
                 s = System.currentTimeMillis();

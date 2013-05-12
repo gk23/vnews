@@ -8,12 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import net.vxinwen.service.GetJokeService;
 import net.vxinwen.service.GetNewsService;
+
+import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
 
 /**
  * 同步接口
@@ -77,13 +75,8 @@ public class GetNewsServlet extends HttpServlet {
         logger.debug("tagslist.length is " + tagslist.length);
         long[] longIds = convertStringToLong(idslist);
         GetNewsService getNewsService = new GetNewsService();
-        GetJokeService getJokeService = new GetJokeService();
         long duanziId = isHaveJoke(tagslist, longIds);
         JSONObject newses = getNewsService.get(longIds, tagslist);
-        if (duanziId != -1) {
-            JSONArray jokes = getJokeService.get(duanziId);
-            newses.put(DUANZI, jokes);
-        }
         out.print(newses.toJSONString());
     }
 
