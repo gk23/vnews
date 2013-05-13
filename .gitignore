@@ -4,3 +4,6 @@
 *.jar
 *.war
 *.ear
+
+# ignore for security #
+dataSource.properties
