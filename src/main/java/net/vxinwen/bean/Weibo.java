@@ -1,6 +1,16 @@
 package net.vxinwen.bean;
-
+/**
+ * 热门微博
+ * 
+ * @author gk23
+ *
+ */
 public class Weibo {
+    /**
+     * 微博分类，有全部，娱乐，财经，科技等
+     */
+    private WeiboCategory category;
+
     private String userName;
     private String icon;
     private String content;
@@ -18,6 +28,12 @@ public class Weibo {
      */
     private String commentCount;
     private String commentLink;
+    public WeiboCategory getCategory() {
+        return category;
+    }
+    public void setCategory(WeiboCategory category) {
+        this.category = category;
+    }
     public String getUserName() {
         return userName;
     }
@@ -84,4 +100,37 @@ public class Weibo {
     public void setCommentLink(String commentLink) {
         this.commentLink = commentLink;
     }
+    /**
+     * 热门微博全部类别
+     *
+     * @author gk23
+     *
+     */
+    enum WeiboCategory{
+        All("全部","9999"),
+        YuLe("娱乐","1099"),
+        CaiJing("财经","1299"),
+        Keji("科技","2099"),
+        ShiShang("时尚","1599"),
+        JiangKang("健康","2199"),
+        TiYu("体育","1399"),
+        WenHua("文化","1499"),
+        XingZuo("星座","1699"),
+        YouMo("幽默","1899"),
+        ZheYan("哲言","1999"),
+        SheHui("社会","1799"),
+        ShiPin("视频","1199");
+        private String cnName;
+        private String url;
+        WeiboCategory(String cnName,String url){
+            this.cnName = cnName;
+            this.url="http://hot.weibo.com/?v="+url;
+        }
+        public String getCnName(){
+            return this.cnName;
+        }
+        public String getUrl(){
+            return this.url;
+        }
+    };
 }
